@@ -1,0 +1,238 @@
+body {
+    background: #F1F3F6;
+}
+
+header {
+    margin-bottom: 75px;
+}
+
+.mainTimer {
+    position: relative;
+    width: 300px;
+    background: #F1F3F6;
+}
+
+.progressbar {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: #999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 50px;
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: transparent;
+        box-shadow: 5px 5px 15px  rgba(0, 0, 0, .3) inset,
+        -3px -3px 5px rgba(255, 255, 255, .2) inset,
+        -1px -1px 0px rgba(255, 255, 255, .3) inset;
+        border-radius: 50%;
+        z-index: 6;
+    }
+
+    &_circle-left,
+    &_circle-right {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        width: 200px;
+        height: 200px;
+        background: #175D8B;
+        z-index: 2;
+    }
+
+    &_circle-left {
+        left: -100px;
+        transform: rotate(0deg);
+        transition: transform 1s;
+        transform-origin: right 100px;
+    }
+
+    &_circle-right {
+        left: 100px;
+        transform-origin: left 100px;
+        transform: rotate(0deg);
+        transition: transform 1s;
+
+        &-done {
+            transition: transform 0s;
+            transform: rotate(360deg) !important;
+            background: #999;
+        }
+    }
+}
+
+.progressbar_inner {
+    width: 165px;
+    height: 165px;
+    position: absolute;
+    top: 17.5px;
+    left: 17.5px;
+    background: #F1F3F6;
+    z-index: 4;
+    border-radius: 50%;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, .3),
+    -3px -3px 5px rgba(255, 255, 255, .1),
+    -1px -1px 0px #FFFFFF;
+}
+
+.time {
+    font-size: 2rem;
+    text-align: center;
+    z-index: 5;
+    vertical-align: middle;
+    margin-top: 10px;
+}
+
+@mixin defaultBtn {
+    background: #F1F3F6;
+    box-shadow: 5px 5px 15px #D5D8DD,
+                -5px -5px 15px #FFFFFF,
+                -1px -1px 0px #FFFFFF;
+    cursor: pointer;
+    position: relative;
+    transition: all .3s;
+
+    &:active {
+        box-shadow: 5px 5px 15px #D5D8DD inset,
+        -5px -5px 15px #FFFFFF inset,
+        -1px -1px 0px #FFFFFF inset; 
+    }
+}
+
+.timerButton {
+    display: flex;
+    justify-content: center;
+}
+
+.timerButton_item {
+    @include defaultBtn;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+
+    &:not(last-child) {
+        margin: 0 15px;
+    }
+}
+
+.timerButton_item-start::before {
+    position: absolute;
+    content: "";
+    top: 30%;
+    left: calc(50% - 7px);
+    border-top: 12.5px solid transparent;
+    border-bottom: 12.5px solid transparent;
+    border-left: 20px solid #175D8B;
+}
+
+.timerButton_item-skip::before,
+.timerButton_item-skip::after {
+    position: absolute;
+    content: "";
+    top: 38%;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 13px solid #175D8B;
+}
+
+.timerButton_item-skip::before {
+    left: calc(50% - 9px);
+}
+
+.timerButton_item-skip::after {
+    left: calc(50% + 2px);
+}
+
+.timerButton_item-stop::before {
+    position: absolute;
+    content: "";
+    top: calc(50% - 10px);
+    left: calc(50% - 10px);
+    background: #175D8B;
+    width: 20px;
+    height: 20px;
+}
+
+.timerButton_item-reset {
+
+    img {
+        width: 55px;
+        height: auto;
+        margin-top: 2px;
+        margin-left: 2px;
+    }
+}
+
+.timerButton_item-reset::before {
+    position: absolute;
+    content: "";
+    background: url("./reset.png");
+    width: 20px;
+    height: 20px;
+}
+
+.timerButton_item-mute {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 43px !important;
+
+    img {
+        width: 20px;
+        height: auto;
+    }
+
+    &.timerButton_item-disable {
+        box-shadow: 5px 5px 15px #D5D8DD inset,
+        -5px -5px 15px #FFFFFF inset,
+        -1px -1px 0px #FFFFFF inset;
+    }
+}
+
+.timerButton_item-pause {
+    box-shadow: 5px 5px 15px #D5D8DD inset,
+    -5px -5px 15px #FFFFFF inset,
+    -1px -1px 0px #FFFFFF inset;
+
+    &:active {
+        box-shadow: 5px 5px 15px #D5D8DD inset,
+        -5px -5px 15px #FFFFFF inset,
+        -1px -1px 0px #FFFFFF inset,
+        1px 1px 0px rgb(173, 177, 185) inset;
+    }
+
+    &::before,
+    &::after {
+        position: absolute;
+        content: "";
+        width: 7px;
+        height: 20px;
+        background: #175D8B;
+        top: calc(50% - 10px);
+    }
+
+    &::before {
+        left: calc(50% - 10px);
+    }
+
+    &::after {
+        left: calc(50% + 5px);
+    }
+}
+
+.timerPlayer {
+    display: none;
+}
